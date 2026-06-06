@@ -1,61 +1,39 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { fetchHubs } from '../lib/api'
 import PageHeader from '../components/ui/PageHeader'
 import Badge from '../components/ui/Badge'
 import EmptyState from '../components/ui/EmptyState'
+import Spinner from '../components/ui/Spinner'
+import ErrorMessage from '../components/ui/ErrorMessage'
 
-const hubs = [
-  {
-    id: '1',
-    name: 'Agadir Grand Taxi Station',
-    city: 'Agadir',
-    address: 'Avenue du Prince Moulay Abdellah, Agadir',
-    destinations: ['Marrakech', 'Essaouira', 'Imsouane', 'Tiznit'],
-    type: 'Grand Taxi',
-    notes: 'Main hub for long-distance grand taxis heading north and south.',
-  },
-  {
-    id: '2',
-    name: 'Marrakech CTM Bus Station',
-    city: 'Marrakech',
-    address: 'Bab Doukkala, Marrakech',
-    destinations: ['Casablanca', 'Agadir', 'Essaouira', 'Fes'],
-    type: 'Bus',
-    notes: 'Central bus terminal for CTM and Supratours services.',
-  },
-  {
-    id: '3',
-    name: 'Essaouira Grand Taxi Stand',
-    city: 'Essaouira',
-    address: 'Avenue du Caire, Essaouira',
-    destinations: ['Marrakech', 'Agadir', 'Safi'],
-    type: 'Grand Taxi',
-    notes: 'Located near the medina walls. Easy to find from the town center.',
-  },
-  {
-    id: '4',
-    name: 'Casablanca Ouled Ziane Bus Terminal',
-    city: 'Casablanca',
-    address: 'Ouled Ziane, Casablanca',
-    destinations: ['Marrakech', 'Agadir', 'Fes', 'Rabat', 'Tangier'],
-    type: 'Bus',
-    notes: 'Largest bus terminal in Casablanca. Multiple operators available.',
-  },
-  {
-    id: '5',
-    name: 'Imsouane Taxi Stop',
-    city: 'Imsouane',
-    address: 'Village entrance, Imsouane',
-    destinations: ['Agadir', 'Tamri'],
-    type: 'Grand Taxi',
-    notes: 'Small informal stop at the village entrance. Ask locals if unsure.',
-  },
-]
-
-const cities = [...new Set(hubs.map(h => h.city))].sort()
+interface Hub {
+  id: string
+  name: string
+  city: string
+  address: string
+  type: 'Grand Taxi' | 'Bus'
+  notes: string
+  hub_destinations: { destination: string }[]
+}
 
 export default function Hubs() {
+  const [hubs, setHubs] = useState<Hub[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
   const [city, setCity] = useState('')
+
+  useEffect(() => {
+    fetchHubs()
+      .then(setHubs)
+      .catch(() => setError(true))
+      .finally(() => setLoading(false))
+  }, [])
+
+  const cities = [...new Set(hubs.map(h => h.city))].sort()
   const filtered = hubs.filter(h => !city || h.city === city)
+
+  if (loading) return <Spinner />
+  if (error) return <ErrorMessage message="Could not load hubs. Make sure the server is running." />
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
@@ -93,8 +71,8 @@ export default function Hubs() {
               <div>
                 <p className="text-xs font-medium text-gray-400 mb-1.5">Destinations served</p>
                 <div className="flex flex-wrap gap-2">
-                  {hub.destinations.map(d => (
-                    <Badge key={d} label={d} color="gray" />
+                  {hub.hub_destinations.map(d => (
+                    <Badge key={d.destination} label={d.destination} color="gray" />
                   ))}
                 </div>
               </div>

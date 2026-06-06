@@ -1,60 +1,21 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { fetchReviews, submitReview } from '../lib/api'
 import PageHeader from '../components/ui/PageHeader'
 import Badge from '../components/ui/Badge'
+import Spinner from '../components/ui/Spinner'
+import ErrorMessage from '../components/ui/ErrorMessage'
 
 interface Review {
   id: string
   author: string
   location: string
   rating: number
-  date: string
+  date?: string
+  created_at?: string
   transport: string
   route: string
   comment: string
 }
-
-const initialReviews: Review[] = [
-  {
-    id: '1',
-    author: 'Sarah M.',
-    location: 'UK',
-    rating: 5,
-    date: 'May 2025',
-    transport: 'Grand Taxi',
-    route: 'Agadir → Essaouira',
-    comment: 'Smooth ride, driver was friendly and the price was exactly what Movocco said. Highly recommend booking the full taxi if you have a group.',
-  },
-  {
-    id: '2',
-    author: 'Lucas B.',
-    location: 'France',
-    rating: 4,
-    date: 'April 2025',
-    transport: 'CTM Bus',
-    route: 'Marrakech → Casablanca',
-    comment: 'Very comfortable bus, air conditioned and on time. Bought my ticket the day before with no issues. Only downside was the station was hard to find.',
-  },
-  {
-    id: '3',
-    author: 'Amara D.',
-    location: 'USA',
-    rating: 5,
-    date: 'March 2025',
-    transport: 'InDrive',
-    route: 'Agadir → Marrakech',
-    comment: 'Used InDrive for the first time in Morocco and it was great. Negotiated a fair price in the app and the driver was professional the whole way.',
-  },
-  {
-    id: '4',
-    author: 'Tom W.',
-    location: 'Germany',
-    rating: 3,
-    date: 'February 2025',
-    transport: 'Grand Taxi',
-    route: 'Marrakech → Essaouira',
-    comment: 'Waited almost an hour for the taxi to fill up. Once moving it was fine but the wait was frustrating. Worth knowing this can happen.',
-  },
-]
 
 const transportOptions = ['Grand Taxi', 'Petit Taxi', 'CTM Bus', 'Supratours Bus', 'InDrive']
 
@@ -77,33 +38,51 @@ function StarRating({ rating, onChange }: { rating: number; onChange?: (r: numbe
   )
 }
 
+function formatDate(dateStr?: string) {
+  if (!dateStr) return ''
+  return new Date(dateStr).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })
+}
+
 export default function Reviews() {
-  const [reviews, setReviews] = useState<Review[]>(initialReviews)
+  const [reviews, setReviews] = useState<Review[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
   const [showForm, setShowForm] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
   const [form, setForm] = useState({
     author: '', location: '', transport: '', route: '', rating: 0, comment: '',
   })
-  const [submitted, setSubmitted] = useState(false)
 
-  function handleSubmit() {
+  useEffect(() => {
+    fetchReviews()
+      .then(setReviews)
+      .catch(() => setError(true))
+      .finally(() => setLoading(false))
+  }, [])
+
+  async function handleSubmit() {
     if (!form.author || !form.transport || !form.route || !form.rating || !form.comment) return
-    const newReview: Review = {
-      id: Date.now().toString(),
-      author: form.author,
-      location: form.location,
-      rating: form.rating,
-      date: 'Just now',
-      transport: form.transport,
-      route: form.route,
-      comment: form.comment,
+    setSubmitting(true)
+    try {
+      const newReview = await submitReview(form)
+      setReviews([newReview, ...reviews])
+      setForm({ author: '', location: '', transport: '', route: '', rating: 0, comment: '' })
+      setShowForm(false)
+      setSubmitted(true)
+    } catch {
+      alert('Failed to submit review. Please try again.')
+    } finally {
+      setSubmitting(false)
     }
-    setReviews([newReview, ...reviews])
-    setForm({ author: '', location: '', transport: '', route: '', rating: 0, comment: '' })
-    setShowForm(false)
-    setSubmitted(true)
   }
 
-  const avgRating = (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
+  const avgRating = reviews.length
+    ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
+    : '0.0'
+
+  if (loading) return <Spinner />
+  if (error) return <ErrorMessage message="Could not load reviews. Make sure the server is running." />
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-12">
@@ -204,10 +183,10 @@ export default function Reviews() {
             </div>
             <button
               onClick={handleSubmit}
-              disabled={!form.author || !form.transport || !form.route || !form.rating || !form.comment}
+              disabled={!form.author || !form.transport || !form.route || !form.rating || !form.comment || submitting}
               className="w-full bg-emerald-600 text-white text-sm font-medium py-2.5 rounded-lg hover:bg-emerald-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
             >
-              Submit review
+              {submitting ? 'Submitting...' : 'Submit review'}
             </button>
           </div>
         </div>
@@ -223,7 +202,7 @@ export default function Reviews() {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-gray-900">{review.author}</p>
-                  <p className="text-xs text-gray-400">{review.location} · {review.date}</p>
+                  <p className="text-xs text-gray-400">{review.location} · {formatDate(review.created_at)}</p>
                 </div>
               </div>
               <StarRating rating={review.rating} />

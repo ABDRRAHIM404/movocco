@@ -1,34 +1,63 @@
-import { useState } from 'react'
-import type { TransportMethod } from '../types'
-import { routes, cities } from '../lib/data'
+import { useState, useEffect } from 'react'
+import { fetchRoutes } from '../lib/api'
 import PageHeader from '../components/ui/PageHeader'
 import EmptyState from '../components/ui/EmptyState'
 import Badge from '../components/ui/Badge'
+import Spinner from '../components/ui/Spinner'
+import ErrorMessage from '../components/ui/ErrorMessage'
 
-const methodLabels: Record<TransportMethod, string> = {
+interface RoutePrice {
+  method: 'grand-taxi' | 'bus' | 'indrive'
+  price: number
+  duration: string
+}
+
+interface Route {
+  id: string
+  from_city: string
+  to_city: string
+  route_prices: RoutePrice[]
+}
+
+const methodLabels: Record<string, string> = {
   'grand-taxi': 'Grand Taxi',
   'bus': 'Bus',
   'indrive': 'InDrive',
 }
 
-const methodBadgeColors: Record<TransportMethod, 'green' | 'blue' | 'amber'> = {
+const methodBadgeColors: Record<string, 'green' | 'blue' | 'amber'> = {
   'grand-taxi': 'green',
   'bus': 'blue',
   'indrive': 'amber',
 }
 
 export default function Prices() {
+  const [routes, setRoutes] = useState<Route[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
   const [from, setFrom] = useState('')
   const [to, setTo] = useState('')
 
+  useEffect(() => {
+    fetchRoutes()
+      .then(setRoutes)
+      .catch(() => setError(true))
+      .finally(() => setLoading(false))
+  }, [])
+
+  const cities = [...new Set(routes.flatMap(r => [r.from_city, r.to_city]))].sort()
+
   const results = routes.filter(r => {
-    const matchFrom = !from || r.from === from
-    const matchTo = !to || r.to === to
+    const matchFrom = !from || r.from_city === from
+    const matchTo = !to || r.to_city === to
     return matchFrom && matchTo
   })
 
-  const cheapest = (prices: { price: number }[]) =>
+  const cheapest = (prices: RoutePrice[]) =>
     Math.min(...prices.map(p => p.price))
+
+  if (loading) return <Spinner />
+  if (error) return <ErrorMessage message="Could not load routes. Make sure the server is running." />
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
@@ -72,15 +101,15 @@ export default function Prices() {
           {results.map(route => (
             <div key={route.id} className="border border-gray-100 rounded-xl p-5">
               <div className="flex items-center gap-2 mb-4">
-                <span className="text-sm font-semibold text-gray-900">{route.from}</span>
+                <span className="text-sm font-semibold text-gray-900">{route.from_city}</span>
                 <span className="text-gray-300">→</span>
-                <span className="text-sm font-semibold text-gray-900">{route.to}</span>
+                <span className="text-sm font-semibold text-gray-900">{route.to_city}</span>
                 <span className="ml-auto text-xs text-gray-400">
-                  from <span className="text-emerald-600 font-medium">{cheapest(route.prices)} MAD</span>
+                  from <span className="text-emerald-600 font-medium">{cheapest(route.route_prices)} MAD</span>
                 </span>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                {route.prices.map(p => (
+                {route.route_prices.map(p => (
                   <div key={p.method} className="border border-gray-100 rounded-lg px-4 py-3">
                     <div className="mb-2">
                       <Badge label={methodLabels[p.method]} color={methodBadgeColors[p.method]} />
