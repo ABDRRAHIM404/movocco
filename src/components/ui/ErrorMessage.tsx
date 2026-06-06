@@ -1,0 +1,15 @@
+interface Props {
+  message?: string
+}
+
+export default function ErrorMessage({ message = 'Something went wrong. Please try again.' }: Props) {
+  return (
+    <div className="flex flex-col items-center justify-center py-16 text-center px-4">
+      <div className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center mb-3">
+        <span className="text-red-400 text-lg">!</span>
+      </div>
+      <p className="text-sm font-medium text-gray-900 mb-1">Something went wrong</p>
+      <p className="text-sm text-gray-400">{message}</p>
+    </div>
+  )
+}
