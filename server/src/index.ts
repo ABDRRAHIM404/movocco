@@ -16,7 +16,11 @@ import reviewsRouter from './routes/reviews'
 const app = express()
 const PORT = process.env.PORT || 3001
 
-app.use(cors({ origin: 'https://movocco.vercel.app' }))
+app.use(cors({
+  origin: 'https://movocco.vercel.app',
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type'],
+}))
 app.use(express.json())
 
 app.use('/api/routes', routesRouter)
