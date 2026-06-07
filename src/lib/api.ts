@@ -1,4 +1,4 @@
-const BASE_URL = 'https://movocco-production.up.railway.app/api'
+const BASE_URL = 'https://movocco-backend-production.up.railway.app/api'
 
 export async function fetchRoutes() {
   const res = await fetch(`${BASE_URL}/routes`)
