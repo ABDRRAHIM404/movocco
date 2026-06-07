@@ -5,6 +5,7 @@ import Badge from '../components/ui/Badge'
 import EmptyState from '../components/ui/EmptyState'
 import Spinner from '../components/ui/Spinner'
 import ErrorMessage from '../components/ui/ErrorMessage'
+import HubMap from '../components/map/HubMap'
 
 interface Hub {
   id: string
@@ -42,6 +43,12 @@ export default function Hubs() {
         description="Find Grand Taxi stations and bus terminals across Morocco."
       />
 
+      {/* Map */}
+      <div className="mb-8">
+        <HubMap hubs={hubs} />
+      </div>
+
+      {/* Filter */}
       <div className="mb-6 max-w-xs">
         <label className="text-xs font-medium text-gray-500 mb-1 block">Filter by city</label>
         <select
@@ -54,6 +61,7 @@ export default function Hubs() {
         </select>
       </div>
 
+      {/* Hub cards */}
       {filtered.length === 0 ? (
         <EmptyState title="No hubs found" description="Try a different city." />
       ) : (
