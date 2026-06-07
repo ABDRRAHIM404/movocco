@@ -12,9 +12,9 @@ import NotFound from './pages/NotFound'
 function App() {
   return (
     <BrowserRouter>
-      <div className="min-h-screen flex flex-col bg-white">
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: '#fff' }}>
         <Navbar />
-        <main className="flex-1">
+        <main style={{ flex: 1 }}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/prices" element={<Prices />} />
