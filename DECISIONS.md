@@ -5,6 +5,9 @@ Updated: 2026-11-06. Complete requirements: [master-prompt.md](master-prompt.md)
 ## Approved
 
 - Audience: international visitors and domestic tourists traveling within Morocco.
+- MVP: Agadir only; Inezgane, Aït Melloul, Aourir, Tamraght and Taghazout are future expansion requiring explicit approval. Airport or other connections outside Agadir also require scope approval.
+- Data targets: 20–30 routes, 30–50 boarding points and 15 reference journeys are flexible estimates, not mandatory requirements; actual coverage depends on independently verified transportation data.
+- Phase 1.1 boundaries: technical foundation, basic layout structure and multilingual/RTL support only. Logo, colors, typography, homepage design and brand identity require explicit approval before finalization; implementation remains unapproved.
 - Seven ordered phases: Planning, Foundation, Transport Data, Journey Planner, Web MVP, Advanced Features, Mobile Apps (0–6).
 - General architecture: web first; monorepo; Next.js, PostgreSQL/PostGIS with Supabase, MapLibre, regional place index, bounded transport graph; React Native/Expo for later native apps. Exact versions/provider setup remain to be checked before use.
 - Preserve all master requirements, including deferred features. General architecture approval does not authorize every feature or service action.
@@ -29,7 +32,7 @@ No operator outreach or field verification has been performed. An accountable da
 
 ## Proposals requiring refinement/confirmation
 
-- Exact launch corridors and numeric coverage targets depend on evidence availability; retain a small Agadir-area scope.
+- Exact journeys within Agadir depend on independently verified data; expansion requires explicit approval.
 - Atlantic Atlas branding and translation sequence remain proposals; script/editorial choices need Darija/Tachelhit reviewers.
 - Prior provider/price research is a dated planning input, not an uptime or zero-cost guarantee. Recheck only the services relevant to the next approved milestone.
 - Before hosted accounts: resolve CNDP/overseas processing obligations, email delivery, provider limits and backup/recovery ownership.

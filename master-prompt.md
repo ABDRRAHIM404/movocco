@@ -26,7 +26,9 @@ Build a premium Moroccan transportation guide and intelligent journey planner.
 
 Movocco must help users discover how to travel from point A to point B using Morocco's transportation networks, including connections that are difficult to find on conventional mapping platforms.
 
-Begin with **Souss-Massa**, then progressively expand throughout Morocco.
+Begin with **Agadir only** for the MVP, then progressively expand within Souss-Massa and throughout Morocco with explicit approval. Inezgane, Aït Melloul, Aourir, Tamraght, and Taghazout are future expansion areas, excluded from initial MVP coverage. Airport or other connections outside Agadir also require explicit scope approval.
+
+The proposed 20–30 routes, 30–50 boarding points, and 15 reference journeys are flexible estimates, not mandatory requirements. Actual coverage depends on independently verified transportation data.
 
 Design the architecture for nationwide coverage from the beginning, without unnecessarily complicating the initial implementation.
 
@@ -274,6 +276,8 @@ Structure the system so that supported booking partnerships can be integrated la
 
 Completely redesign Movocco's visual identity while keeping its name.
 
+Phase 1.1 is limited to the technical foundation, basic layout structure, and multilingual/RTL support. Do not finalize the logo, colors, typography, homepage design, or brand identity without explicit approval. Phase 1.1 implementation remains unapproved.
+
 Brand characteristics:
 
 - Modern and minimalist
@@ -440,7 +444,7 @@ All approved requirements remain in this specification, including deferred featu
 
 For every phase, provide dependencies, priorities, deliverables, testing requirements, and measurable acceptance criteria.
 
-Identify the smallest useful MVP that can realistically launch in Souss-Massa.
+Identify the smallest useful MVP that can realistically launch in Agadir only; wider Souss-Massa coverage requires explicit expansion approval.
 
 ## 22. CODEX DEVELOPMENT RULES
 

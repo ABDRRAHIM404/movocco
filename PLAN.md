@@ -14,7 +14,7 @@ define and obtain approval for a small milestone's tasks, dependencies, and acce
 | 0 Planning | Tourist scope, requirement mapping, decisions, data dependencies | All 23 specification sections accounted for; no implementation |
 | 1 Foundation | Monorepo, database, auth/roles, design and locale foundations | Permission and validation tests pass; RTL shell, lint, types, build checked |
 | 2 Transport Data | Essential admin, sourcing/imports, places, directional services, fares, calendars, evidence | Publish only licensed/authorized, reviewed data; import, provenance, moderation and geography checks pass |
-| 3 Journey Planner | Place search, graph, fare logic, walking connections, maps | All 15 reviewed reference journeys pass; unknowns remain unknown; no invented connections |
+| 3 Journey Planner | Place search, graph, fare logic, walking connections, maps | All selected, independently verified reference journeys pass; count is flexible; unknowns remain unknown; no invented connections |
 | 4 Web MVP | Tourist flows, contributions, saved instructions, booking links, launch translations | Critical browser flows, deletion, offline snapshots, accessibility and performance checks pass; no deployment without approval |
 | 5 Advanced Features | Remaining community/admin scope, navigation, AI, full localization, wider coverage | Feature-specific tests; AI source/refusal checks; seven languages reviewed; navigation limitations explicit |
 | 6 Mobile Apps | Native Android/iOS, background assistance, release preparation | Physical-device permission, termination, battery and connectivity tests pass; publishing separately approved |
@@ -24,13 +24,13 @@ Accessibility, privacy, security and low-bandwidth support begin in Phase 1, not
 
 ## Tourist-focused web MVP
 
-- Initial area: Agadir, Inezgane, Aït Melloul, Aourir, Tamraght and Taghazout; airport connections only after verification. These are proposed coverage targets, not service claims.
+- Initial area: Agadir only. Inezgane, Aït Melloul, Aourir, Tamraght and Taghazout are future expansion areas requiring explicit approval; airport or other connections outside Agadir also require scope approval.
 - Public planning from places, hotels, landmarks and airports; multilingual aliases, GPS/map selection, nearby discovery and clear no-coverage states.
 - Compare supported journeys by cost, time and transfers; boarding/walking/transfer instructions, sourced estimates, freshness, alerts and maps with text alternatives.
 - Essential admin, moderated submissions and issue reports; email/Google accounts for contributions and saved journeys; deletion and role enforcement.
 - Saved offline instructions, cached recent transport records, low-data controls; official booking links only; no launch monetization or payments.
 - Proposed translation order: English/French/MSA, then Darija/Tachelhit, then Spanish/German. Core launch translations need human review.
-- Provisional dataset gate: 20–30 directional service patterns, 30–50 boarding points/hubs, at least two verified modes, and 15 evidence-backed reference journeys. Adjust only through an explicit scope decision.
+- Flexible estimates, not mandatory requirements: 20–30 directional service patterns, 30–50 boarding points/hubs, and 15 reference journeys. Actual coverage depends on independently verified transportation data; retain the goal of at least two verified modes.
 - All eight transport categories remain required; include actual services only where verified. AI, advanced navigation/community features and mobile apps are deferred, not removed.
 
 ## Requirement-to-phase map
@@ -72,6 +72,6 @@ References point to complete requirements in the master specification; each row 
 ## Proposed milestone 1.1 — Local web skeleton (not authorized)
 
 - Dependencies: accepted Phase 0 baseline, explicit milestone approval; check current framework/runtime compatibility before installation.
-- Tasks: create a minimal TypeScript monorepo and Next.js web shell; configure lint/type/build scripts and lockfile; establish seven-locale metadata and LTR/RTL layout foundations with clearly labeled untranslated content.
-- Acceptance: local web shell builds; lint and type checks pass; locale direction and keyboard behavior checked; no fabricated transport data, hosted resources, auth integration or deployment.
+- Tasks: create a minimal TypeScript monorepo and Next.js web shell with basic layout structure; configure lint/type/build scripts and lockfile; establish seven-locale metadata and LTR/RTL layout foundations with clearly labeled untranslated content.
+- Acceptance: local web shell builds; lint and type checks pass; locale direction and keyboard behavior checked; no fabricated transport data, hosted resources, auth integration or deployment. Logo, colors, typography, homepage design and brand identity must not be finalized without explicit approval.
 - Later Foundation milestones must establish database/auth/permissions and design foundations before Transport Data starts. Branding and translation content remain subject to review.
