@@ -26,6 +26,12 @@ export function JourneyCard({ journey, originName, destinationName, badges, onPr
     .map((leg) => TRANSPORT_MODE_LABELS[leg.mode][locale])
     .filter((value, index, arr) => arr.indexOf(value) === index)
     .join(' · ');
+  // Mode icon tile: first letter of the first leg's mode, cyan per the design.
+  const firstMode = journey.legs[0]?.mode;
+  const modeLetter =
+    firstMode !== undefined
+      ? TRANSPORT_MODE_LABELS[firstMode][locale].charAt(0).toUpperCase()
+      : '?';
 
   const rankBadges: string[] = [];
   if (badges.cheapest === true) rankBadges.push(t('cheapest'));
@@ -39,6 +45,11 @@ export function JourneyCard({ journey, originName, destinationName, badges, onPr
       style={[styles.card, { backgroundColor: palette.card, borderColor: palette.border }]}
     >
       <View style={styles.topRow}>
+        <View style={[styles.modeTile, { backgroundColor: palette.info }]}>
+          <Text style={[styles.modeTileText, { color: palette.background, fontSize: scaled(fontSize.lg, textScale) }]}>
+            {modeLetter}
+          </Text>
+        </View>
         <Text style={[styles.route, { color: palette.text, fontSize: scaled(fontSize.lg, textScale) }]}>
           {originName} → {destinationName}
         </Text>
@@ -77,10 +88,18 @@ export function JourneyCard({ journey, originName, destinationName, badges, onPr
 const styles = StyleSheet.create({
   card: {
     borderWidth: 1,
-    borderRadius: 12,
+    borderRadius: 20,
     padding: spacing.lg,
     gap: spacing.sm,
   },
+  modeTile: {
+    width: 48,
+    height: 48,
+    borderRadius: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modeTileText: { fontWeight: '800' },
   topRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', gap: spacing.sm },
   route: { fontWeight: '700', flex: 1 },
   meta: { lineHeight: 22 },

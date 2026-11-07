@@ -63,7 +63,7 @@ export interface SourceInfo {
   lastReviewedOn: string | null;
 }
 
-export type PlaceKind = 'landmark' | 'hub' | 'beach' | 'market' | 'neighbourhood' | 'station';
+export type PlaceKind = 'landmark' | 'hub' | 'beach' | 'marina' | 'market' | 'neighbourhood' | 'station';
 
 export interface Place {
   id: string;
@@ -118,9 +118,17 @@ export interface SavedJourney {
   durationText: string;
 }
 
+export type ThemePreference = 'system' | 'light' | 'dark';
+
 export interface AppSettings {
   largeText: boolean;
   lowData: boolean;
+  /** 'system' follows the device colour scheme; light/dark force a mode. */
+  theme: ThemePreference;
 }
 
-export const DEFAULT_SETTINGS: AppSettings = { largeText: false, lowData: false };
+export const DEFAULT_SETTINGS: AppSettings = {
+  largeText: false,
+  lowData: false,
+  theme: 'system',
+};

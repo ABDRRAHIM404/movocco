@@ -13,14 +13,18 @@ interface ScreenProps {
   /** Show a back button (stack screens). */
   back?: boolean;
   children: React.ReactNode;
+  /**
+   * Sticky footer rendered below the scroll area (e.g. the primary CTA on
+   * the journey detail and guidance screens). Not scrollable.
+   */
+  footer?: React.ReactNode;
 }
 
 /**
  * Standard screen shell: safe area, scrollable content, header with an
- * optional back button and DEMO badge. Minimum tap target 44pt is respected
- * by the button styles used across the app.
+ * optional back button and DEMO badge. Touch targets are at least 48pt.
  */
-export function Screen({ title, demo = false, back = false, children }: ScreenProps) {
+export function Screen({ title, demo = false, back = false, children, footer }: ScreenProps) {
   const { palette, textScale } = useAppTheme();
   const { t } = useI18n();
   const router = useRouter();
@@ -64,11 +68,27 @@ export function Screen({ title, demo = false, back = false, children }: ScreenPr
       <ScrollView
         contentContainerStyle={[
           styles.content,
-          { paddingBottom: insets.bottom + spacing.xl },
+          { paddingBottom: footer === undefined ? insets.bottom + spacing.xl : spacing.md },
         ]}
       >
         {children}
       </ScrollView>
+      {footer !== undefined && (
+        <View
+          style={[
+            styles.footer,
+            {
+              backgroundColor: palette.background,
+              borderTopColor: palette.border,
+              paddingHorizontal: spacing.lg,
+              paddingTop: spacing.md,
+              paddingBottom: insets.bottom + spacing.sm,
+            },
+          ]}
+        >
+          {footer}
+        </View>
+      )}
     </View>
   );
 }
@@ -84,15 +104,16 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   backButton: {
-    minHeight: 44,
-    minWidth: 44,
+    minHeight: 48,
+    minWidth: 48,
     justifyContent: 'center',
     paddingHorizontal: spacing.sm,
     borderWidth: 1,
     borderRadius: 8,
   },
   backText: { fontWeight: '600' },
-  backSpacer: { width: 44 },
+  backSpacer: { width: 48 },
   title: { fontWeight: '700', flex: 1, textAlign: 'center' },
   content: { padding: spacing.lg, gap: spacing.lg },
+  footer: { borderTopWidth: 1 },
 });

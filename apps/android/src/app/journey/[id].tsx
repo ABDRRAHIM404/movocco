@@ -127,7 +127,33 @@ export default function JourneyDetailScreen() {
   // Initial saved state loads in the effect above; `null` means "not loaded yet".
 
   return (
-    <Screen title={t('resultsTitle')} demo back>
+    <Screen
+      title={t('resultsTitle')}
+      demo
+      back
+      footer={
+        <View style={styles.footerRow}>
+          <Pressable
+            accessibilityRole="button"
+            onPress={() => router.push({ pathname: '/guidance/[id]', params: { id: journey.id } })}
+            style={[styles.footerPrimary, { backgroundColor: palette.accent }]}
+          >
+            <Text style={[styles.primaryText, { color: palette.onAccent, fontSize: scaled(fontSize.md, textScale) }]}>
+              {t('startGuidance')}
+            </Text>
+          </Pressable>
+          <Pressable
+            accessibilityRole="button"
+            onPress={() => void toggleSave()}
+            style={[styles.footerSecondary, { borderColor: palette.border, backgroundColor: palette.surface }]}
+          >
+            <Text style={[styles.secondaryText, { color: palette.text, fontSize: scaled(fontSize.md, textScale) }]}>
+              {isSaved ? t('unsaveJourney') : t('saveJourney')}
+            </Text>
+          </Pressable>
+        </View>
+      }
+    >
       <Text style={[styles.route, { color: palette.text, fontSize: scaled(fontSize.xl, textScale) }]}>
         {origin?.names[locale] ?? journey.originId} → {destination?.names[locale] ?? journey.destinationId}
       </Text>
@@ -203,20 +229,13 @@ export default function JourneyDetailScreen() {
         })}
       </View>
 
+      <Text style={[styles.section, { color: palette.text, fontSize: scaled(fontSize.lg, textScale) }]}>
+        {t('dataConfidence')}
+      </Text>
       <SourceBadge source={journey.source} />
       <Text style={[styles.meta, { color: palette.muted, fontSize: scaled(fontSize.sm, textScale) }]}>
         {t('noBookingLink')}
       </Text>
-
-      <Pressable
-        accessibilityRole="button"
-        onPress={() => void toggleSave()}
-        style={[styles.primary, { backgroundColor: palette.accent }]}
-      >
-        <Text style={[styles.primaryText, { color: palette.onAccent, fontSize: scaled(fontSize.md, textScale) }]}>
-          {isSaved ? t('unsaveJourney') : t('saveJourney')}
-        </Text>
-      </Pressable>
 
       <Pressable
         accessibilityRole="button"
@@ -238,7 +257,7 @@ const styles = StyleSheet.create({
   route: { fontWeight: '800' },
   notice: {
     borderWidth: 1,
-    borderRadius: 12,
+    borderRadius: 20,
     padding: spacing.md,
     gap: spacing.sm,
     alignItems: 'flex-start',
@@ -246,16 +265,27 @@ const styles = StyleSheet.create({
   noticeText: { lineHeight: 20 },
   meta: { lineHeight: 22 },
   section: { fontWeight: '700' },
-  step: { borderWidth: 1, borderRadius: 12, padding: spacing.md, gap: spacing.xs },
+  step: { borderWidth: 1, borderRadius: 16, padding: spacing.md, gap: spacing.xs },
   stepTitle: { fontWeight: '700', lineHeight: 22 },
   stepText: { lineHeight: 22 },
-  primary: {
+  footerRow: { flexDirection: 'row', gap: spacing.sm },
+  footerPrimary: {
+    flex: 1,
     minHeight: 52,
-    borderRadius: 12,
+    borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },
+  footerSecondary: {
+    minHeight: 52,
+    borderWidth: 1,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: spacing.lg,
+  },
   primaryText: { fontWeight: '800' },
-  report: { minHeight: 44, alignItems: 'center', justifyContent: 'center' },
+  secondaryText: { fontWeight: '700' },
+  report: { minHeight: 48, alignItems: 'center', justifyContent: 'center' },
   reportText: { fontWeight: '700' },
 });

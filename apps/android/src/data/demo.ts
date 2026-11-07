@@ -28,6 +28,18 @@ const DEMO_SOURCE: SourceInfo = {
 
 export const DEMO_PLACES: Place[] = [
   {
+    id: 'talborjt',
+    names: { en: 'Talborjt', fr: 'Talborjt' },
+    aliases: ['talborjt', 'talborj', 'tallborjt', 'talborjet'],
+    kind: 'neighbourhood',
+    lat: 30.419,
+    lon: -9.598,
+    description: {
+      en: 'Central district of Agadir, near the beach and city centre.',
+      fr: 'Quartier central d’Agadir, près de la plage et du centre-ville.',
+    },
+  },
+  {
     id: 'corniche',
     names: { en: 'Agadir Corniche', fr: 'Corniche d’Agadir' },
     aliases: ['corniche', 'plage', 'beach', 'la corniche', 'الكورنيش'],
@@ -55,7 +67,7 @@ export const DEMO_PLACES: Place[] = [
     id: 'marina',
     names: { en: 'Marina of Agadir', fr: 'Marina d’Agadir' },
     aliases: ['marina', 'port', 'le port de plaisance'],
-    kind: 'landmark',
+    kind: 'marina',
     lat: 30.425,
     lon: -9.615,
     description: {
@@ -240,6 +252,9 @@ export const DEMO_JOURNEYS: Journey[] = [
 export function getPlace(id: string): Place | undefined {
   return DEMO_PLACES.find((p) => p.id === id);
 }
+
+/** Places shown under "Popular" in the location picker. */
+export const POPULAR_PLACE_IDS = ['souk-el-had', 'marina', 'corniche'];
 
 export function getJourney(id: string): Journey | undefined {
   return DEMO_JOURNEYS.find((j) => j.id === id);

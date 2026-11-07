@@ -1,13 +1,13 @@
 /**
  * Visual theme for the Movocco Android pilot (Level A).
  *
- * IMPORTANT: the final brand palette, logo, fonts and design system are NOT
- * approved yet (see master-prompt.md §14 and DECISIONS.md). The accent
- * colours below are sampled from the supplied Movocco logo artwork only
- * (orange road / cyan wave) so the pilot stays visually consistent with the
- * logo. They are provisional, not the approved brand palette.
- * The header logos are the supplied files: logo-dark.png on dark surfaces,
- * logo-light.png on light surfaces.
+ * Design tokens from MOVOCCO_APK_DESIGN_4_7eff.md v1.0 (chosen design,
+ * 2026-11-07): navy text, brand orange for the primary action only, brand
+ * cyan for navigation / route lines, warm background, light mode default
+ * with a real dark mode. The header logos are the supplied files:
+ * logo-dark.png on dark surfaces, logo-light.png on light surfaces.
+ * `accentText` is a darkened orange on light mode so text links still meet
+ * WCAG AA contrast; filled primary buttons use `accent` with white text.
  */
 
 export interface Palette {
@@ -30,59 +30,64 @@ export interface Palette {
 }
 
 export const lightPalette: Palette = {
-  background: '#FFFFFF',
-  surface: '#F4F6F8',
+  background: '#FAF9F6',
+  surface: '#FFFFFF',
   card: '#FFFFFF',
-  text: '#101828',
-  muted: '#475467',
-  border: '#E4E7EC',
-  accent: '#C2570B',
-  accentText: '#9A4A08',
-  accentSoft: '#FDF0E3',
-  info: '#0B6FA4',
+  text: '#102B46',
+  muted: '#607181',
+  border: '#E4E9EC',
+  accent: '#F36D3C',
+  accentText: '#A8431A',
+  accentSoft: '#FDEEE6',
+  info: '#0D99B5',
   warning: '#8A5A00',
   danger: '#B42318',
-  success: '#067647',
+  success: '#25866F',
   demo: '#7A3E00',
   demoBackground: '#FFF4E0',
   onAccent: '#FFFFFF',
 };
 
 export const darkPalette: Palette = {
-  background: '#0A1526',
-  surface: '#12233D',
-  card: '#12233D',
-  text: '#F2F5F9',
-  muted: '#A8B3C5',
-  border: '#24344D',
-  accent: '#F5821F',
-  accentText: '#FFB25E',
-  accentSoft: '#2A1D10',
-  info: '#5BC0EB',
+  background: '#0D1826',
+  surface: '#17283A',
+  card: '#17283A',
+  text: '#F5F8FD',
+  muted: '#A9BAC9',
+  border: '#30465A',
+  accent: '#FF895D',
+  accentText: '#FF895D',
+  accentSoft: '#3A2417',
+  info: '#4FC3DB',
   warning: '#FDB022',
   danger: '#F97066',
-  success: '#32D583',
+  success: '#5BC5A5',
   demo: '#FFB25E',
-  demoBackground: '#2A1D10',
-  onAccent: '#1A1206',
+  demoBackground: '#3A2417',
+  onAccent: '#102B46',
 };
 
+/** 8dp grid. Screen horizontal padding is 20dp (spacing.lg). */
 export const spacing = {
   xs: 4,
   sm: 8,
   md: 12,
-  lg: 16,
+  lg: 20,
   xl: 24,
   xxl: 32,
 };
 
+/** Card radius 18–22dp; inputs 16dp; small chips 8dp. */
 export const radii = {
   sm: 8,
-  md: 12,
-  lg: 16,
+  md: 16,
+  lg: 20,
 };
 
-/** Base font sizes (points). Multiplied by the user's text-scale setting. */
+/**
+ * Base font sizes (points). Multiplied by the user's text-scale setting.
+ * Headline 28–34, section 20–24, body 16, secondary 14 minimum.
+ */
 export const fontSize = {
   xs: 12,
   sm: 14,

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useRouter } from 'expo-router';
 import { Screen } from '../components/Screen';
 import { Toggle } from '../components/Toggle';
 import { EmptyState } from '../components/EmptyState';
@@ -9,16 +10,24 @@ import { useI18n } from '../i18n/I18nContext';
 import { useSettings } from '../settings/SettingsContext';
 import { clearAllLocalData } from '../lib/storage';
 import type { SupportedLocale } from '../i18n/strings';
+import type { ThemePreference } from '../data/types';
 
 /**
- * Settings: language, accessibility (larger text), low-data mode, privacy
- * (clear local data), and about / backend status.
+ * Settings: language, theme, accessibility (larger text), low-data mode,
+ * account, privacy (clear local data), data reliability, and about.
  */
 export default function SettingsScreen() {
   const { palette, textScale } = useAppTheme();
   const { t, locale, setLocale, availableLocales } = useI18n();
   const { settings, updateSettings } = useSettings();
   const [cleared, setCleared] = useState(false);
+  const router = useRouter();
+
+  const themeOptions: { value: ThemePreference; label: string }[] = [
+    { value: 'system', label: t('themeSystem') },
+    { value: 'light', label: t('themeLight') },
+    { value: 'dark', label: t('themeDark') },
+  ];
 
   return (
     <Screen title={t('settings')} back>
@@ -51,6 +60,47 @@ export default function SettingsScreen() {
             );
           })}
       </View>
+
+      <Text style={[styles.section, { color: palette.text, fontSize: scaled(fontSize.lg, textScale) }]}>
+        {t('theme')}
+      </Text>
+      <View style={{ gap: spacing.sm }}>
+        {themeOptions.map((option) => {
+          const selected = settings.theme === option.value;
+          return (
+            <Pressable
+              key={option.value}
+              accessibilityRole="button"
+              accessibilityState={{ selected }}
+              onPress={() => void updateSettings({ theme: option.value })}
+              style={[
+                styles.row,
+                {
+                  backgroundColor: selected ? palette.accentSoft : palette.surface,
+                  borderColor: selected ? palette.accent : palette.border,
+                },
+              ]}
+            >
+              <Text style={[styles.rowTitle, { color: palette.text, fontSize: scaled(fontSize.md, textScale) }]}>
+                {option.label}
+              </Text>
+            </Pressable>
+          );
+        })}
+      </View>
+
+      <Text style={[styles.section, { color: palette.text, fontSize: scaled(fontSize.lg, textScale) }]}>
+        {t('accountTitle')}
+      </Text>
+      <Pressable
+        accessibilityRole="button"
+        onPress={() => router.push('/(tabs)/account')}
+        style={[styles.row, { backgroundColor: palette.surface, borderColor: palette.border }]}
+      >
+        <Text style={[styles.rowTitle, { color: palette.text, fontSize: scaled(fontSize.md, textScale) }]}>
+          {t('guest')} ›
+        </Text>
+      </Pressable>
 
       <Text style={[styles.section, { color: palette.text, fontSize: scaled(fontSize.lg, textScale) }]}>
         {t('accessibility')}
@@ -107,6 +157,13 @@ export default function SettingsScreen() {
       {cleared && <EmptyState title={t('clearSavedDataDone')} hint="" />}
 
       <Text style={[styles.section, { color: palette.text, fontSize: scaled(fontSize.lg, textScale) }]}>
+        {t('dataReliability')}
+      </Text>
+      <Text style={[styles.body, { color: palette.muted, fontSize: scaled(fontSize.md, textScale) }]}>
+        {t('dataReliabilityText')}
+      </Text>
+
+      <Text style={[styles.section, { color: palette.text, fontSize: scaled(fontSize.lg, textScale) }]}>
         {t('about')}
       </Text>
       <Text style={[styles.body, { color: palette.muted, fontSize: scaled(fontSize.md, textScale) }]}>
@@ -124,7 +181,7 @@ const styles = StyleSheet.create({
   row: {
     minHeight: 56,
     borderWidth: 1,
-    borderRadius: 12,
+    borderRadius: 16,
     paddingHorizontal: spacing.lg,
     paddingVertical: spacing.sm,
     flexDirection: 'row',
@@ -138,7 +195,7 @@ const styles = StyleSheet.create({
   dangerButton: {
     minHeight: 52,
     borderWidth: 1,
-    borderRadius: 12,
+    borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },

@@ -157,7 +157,34 @@ export type StringKey =
   | 'stopsAndHubs'
   | 'connections'
   | 'officialBookingLink'
-  | 'noBookingLink';
+  | 'noBookingLink'
+  | 'recentSearches'
+  | 'theme'
+  | 'themeSystem'
+  | 'themeLight'
+  | 'themeDark'
+  | 'dataConfidence'
+  | 'dataReliability'
+  | 'dataReliabilityText'
+  | 'startGuidance'
+  | 'nextStep'
+  | 'exitGuidance'
+  | 'guidanceTitle'
+  | 'guidanceNote'
+  | 'stepOf'
+  | 'planTripHere'
+  | 'noMatchingPlace'
+  | 'nearbyTransport'
+  | 'guideGrandTaxiText'
+  | 'guidePetitTaxiText'
+  | 'guideCityBusText'
+  | 'categoryAll'
+  | 'categoryCoast'
+  | 'categoryCity'
+  | 'categoryViewpoints'
+  | 'seePlace'
+  | 'popular'
+  | 'placesInAgadir';
 
 export const STRINGS: Record<SupportedLocale, Record<StringKey, string>> = {
   en: {
@@ -180,14 +207,14 @@ export const STRINGS: Record<SupportedLocale, Record<StringKey, string>> = {
     tabExplore: 'Explore',
     tabSaved: 'Saved',
     tabAccount: 'Account',
-    planTitle: 'Where do you want to go?',
+    planTitle: 'Where are you going?',
     planSubtitle: 'Plan a journey in Agadir. Public planning needs no account.',
     origin: 'From',
     destination: 'To',
     chooseOrigin: 'Choose starting point',
     chooseDestination: 'Choose destination',
     swap: 'Swap origin and destination',
-    searchJourneys: 'Search journeys',
+    searchJourneys: 'Find routes',
     searchPlaceholder: 'Search places in Agadir…',
     noResults: 'No places found',
     noResultsHint: 'Try a different spelling. Only Agadir places are covered in this pilot.',
@@ -250,7 +277,7 @@ export const STRINGS: Record<SupportedLocale, Record<StringKey, string>> = {
     guideInfoUnavailable: 'Guide content is not verified yet.',
     savedTitle: 'Saved journeys',
     savedSubtitle: 'Your offline journey instructions, with their saved date.',
-    savedEmpty: 'No saved journeys yet',
+    savedEmpty: 'Your saved journeys will appear here.',
     savedEmptyHint: 'Save a journey from its detail screen to read it offline later.',
     openOfflineReader: 'Open offline instructions',
     accountTitle: 'Account',
@@ -294,6 +321,38 @@ export const STRINGS: Record<SupportedLocale, Record<StringKey, string>> = {
     connections: 'Connections',
     officialBookingLink: 'Official booking page',
     noBookingLink: 'No official booking link is known for this service.',
+    recentSearches: 'Recent searches',
+    theme: 'Theme',
+    themeSystem: 'System',
+    themeLight: 'Light',
+    themeDark: 'Dark',
+    dataConfidence: 'Data confidence',
+    dataReliability: 'Data reliability',
+    dataReliabilityText:
+      'All transport information in this pilot is demonstration data. Nothing is verified yet: fares, times, routes and boarding points are examples only. Movocco shows “unknown” instead of inventing a fact, and verified data will replace the demo set once it is independently checked.',
+    startGuidance: 'Start guidance',
+    nextStep: 'Next step',
+    exitGuidance: 'Exit guidance',
+    guidanceTitle: 'Guidance',
+    guidanceNote:
+      'Follow the steps one by one. There is no live GPS tracking in this pilot — check street names and landmarks as you go.',
+    stepOf: 'Step',
+    planTripHere: 'Plan a trip here',
+    noMatchingPlace: 'No matching place in the current demo.',
+    nearbyTransport: 'Nearby transport',
+    guideGrandTaxiText:
+      'Shared taxis that run between towns and neighbourhoods. They usually leave when full, and the fare is often per seat — confirm the price and destination with the driver before boarding.',
+    guidePetitTaxiText:
+      'Small city taxis for short trips inside Agadir. They use a meter; check it is running and confirm the destination before you set off.',
+    guideCityBusText:
+      'City buses run fixed routes around Agadir. Buy a ticket on board or at a kiosk where available; routes and times in this pilot are not verified yet.',
+    categoryAll: 'All',
+    categoryCoast: 'Coast',
+    categoryCity: 'City',
+    categoryViewpoints: 'Viewpoints',
+    seePlace: 'See place',
+    popular: 'Popular',
+    placesInAgadir: 'Places in Agadir',
   },
   fr: {
     appTagline: 'Voyager · Planifier · Explorer le Maroc',
@@ -322,7 +381,7 @@ export const STRINGS: Record<SupportedLocale, Record<StringKey, string>> = {
     chooseOrigin: 'Choisir le point de départ',
     chooseDestination: 'Choisir la destination',
     swap: 'Inverser le départ et la destination',
-    searchJourneys: 'Rechercher des trajets',
+    searchJourneys: 'Trouver un itinéraire',
     searchPlaceholder: 'Rechercher un lieu à Agadir…',
     noResults: 'Aucun lieu trouvé',
     noResultsHint: 'Essayez une autre orthographe. Seuls les lieux d’Agadir sont couverts dans ce pilote.',
@@ -385,7 +444,7 @@ export const STRINGS: Record<SupportedLocale, Record<StringKey, string>> = {
     guideInfoUnavailable: 'Le contenu du guide n’est pas encore vérifié.',
     savedTitle: 'Trajets enregistrés',
     savedSubtitle: 'Vos instructions de trajet hors ligne, avec leur date d’enregistrement.',
-    savedEmpty: 'Aucun trajet enregistré pour l’instant',
+    savedEmpty: 'Vos trajets enregistrés apparaîtront ici.',
     savedEmptyHint: 'Enregistrez un trajet depuis son écran de détail pour le lire hors ligne plus tard.',
     openOfflineReader: 'Ouvrir les instructions hors ligne',
     accountTitle: 'Compte',
@@ -429,5 +488,37 @@ export const STRINGS: Record<SupportedLocale, Record<StringKey, string>> = {
     connections: 'Correspondances',
     officialBookingLink: 'Page officielle de réservation',
     noBookingLink: 'Aucun lien officiel de réservation n’est connu pour ce service.',
+    recentSearches: 'Recherches récentes',
+    theme: 'Thème',
+    themeSystem: 'Système',
+    themeLight: 'Clair',
+    themeDark: 'Sombre',
+    dataConfidence: 'Fiabilité des données',
+    dataReliability: 'Fiabilité des données',
+    dataReliabilityText:
+      'Toutes les informations de transport de ce pilote sont des données de démonstration. Rien n’est vérifié pour l’instant : tarifs, durées, itinéraires et points d’embarquement ne sont que des exemples. Movocco affiche « inconnu » plutôt que d’inventer un fait, et des données vérifiées remplaceront la démo lorsqu’elles auront été contrôlées.',
+    startGuidance: 'Démarrer le guidage',
+    nextStep: 'Étape suivante',
+    exitGuidance: 'Quitter le guidage',
+    guidanceTitle: 'Guidage',
+    guidanceNote:
+      'Suivez les étapes une par une. Il n’y a pas de suivi GPS en direct dans ce pilote — vérifiez les noms de rues et les points de repère en chemin.',
+    stepOf: 'Étape',
+    planTripHere: 'Planifier un trajet ici',
+    noMatchingPlace: 'Aucun lieu correspondant dans la démo actuelle.',
+    nearbyTransport: 'Transports à proximité',
+    guideGrandTaxiText:
+      'Taxis partagés entre villes et quartiers. Ils partent généralement quand ils sont pleins, et le tarif est souvent par place — confirmez le prix et la destination avec le chauffeur avant de monter.',
+    guidePetitTaxiText:
+      'Petits taxis urbains pour les trajets courts à Agadir. Ils fonctionnent au compteur ; vérifiez qu’il tourne et confirmez la destination avant de partir.',
+    guideCityBusText:
+      'Les bus urbains suivent des itinéraires fixes à Agadir. Achetez un ticket à bord ou à un kiosque quand c’est possible ; les itinéraires et horaires de ce pilote ne sont pas encore vérifiés.',
+    categoryAll: 'Tous',
+    categoryCoast: 'Côte',
+    categoryCity: 'Ville',
+    categoryViewpoints: 'Points de vue',
+    seePlace: 'Voir le lieu',
+    popular: 'Populaires',
+    placesInAgadir: 'Lieux à Agadir',
   },
 };

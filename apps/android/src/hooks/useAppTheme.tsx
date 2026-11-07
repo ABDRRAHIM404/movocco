@@ -4,12 +4,16 @@ import { useSettings } from '../settings/SettingsContext';
 
 /**
  * Convenience hook for screens/components: palette for the current colour
- * scheme plus the user's text scale. Keeps colour-scheme handling in one place.
+ * scheme plus the user's text scale. Keeps colour-scheme handling in one
+ * place. The user's theme preference (system / light / dark) wins over the
+ * device scheme, so dark mode is real, not system-only.
  */
 export function useAppTheme() {
-  const scheme = useColorScheme();
-  const { textScale } = useSettings();
-  return { palette: paletteFor(scheme), scheme: scheme ?? 'light', textScale };
+  const systemScheme = useColorScheme();
+  const { settings, textScale } = useSettings();
+  const scheme =
+    settings.theme === 'system' ? (systemScheme ?? 'light') : settings.theme;
+  return { palette: paletteFor(scheme), scheme, textScale };
 }
 
 export function Row({

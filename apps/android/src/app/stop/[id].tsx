@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Screen } from '../../components/Screen';
 import { EmptyState } from '../../components/EmptyState';
@@ -11,6 +11,7 @@ import { useI18n } from '../../i18n/I18nContext';
 import { useSettings } from '../../settings/SettingsContext';
 import { DEMO_JOURNEYS, getPlace } from '../../data/demo';
 import { TRANSPORT_MODE_LABELS } from '../../data/types';
+import { setDestination } from '../../lib/planSelection';
 
 /**
  * Stop / hub detail: what the place is, its connections in the demo set,
@@ -52,6 +53,19 @@ export default function StopDetailScreen() {
       <Text style={[styles.description, { color: palette.text, fontSize: scaled(fontSize.md, textScale) }]}>
         {place.description[locale]}
       </Text>
+
+      <Pressable
+        accessibilityRole="button"
+        onPress={() => {
+          setDestination(place);
+          router.push('/(tabs)/plan');
+        }}
+        style={[styles.primary, { backgroundColor: palette.accent }]}
+      >
+        <Text style={[styles.primaryText, { color: palette.onAccent, fontSize: scaled(fontSize.md, textScale) }]}>
+          {t('planTripHere')}
+        </Text>
+      </Pressable>
 
       <MapSchematic
         points={[{ place, label: place.names[locale], kind: 'stop' }]}
@@ -110,8 +124,15 @@ const styles = StyleSheet.create({
   kind: {},
   description: { lineHeight: 24 },
   section: { fontWeight: '700' },
-  row: { borderWidth: 1, borderRadius: 12, padding: spacing.md, gap: 2 },
+  row: { borderWidth: 1, borderRadius: 16, padding: spacing.md, gap: 2 },
   rowTitle: { fontWeight: '700' },
   rowMeta: {},
+  primary: {
+    minHeight: 52,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  primaryText: { fontWeight: '800' },
   footnote: { lineHeight: 20 },
 });

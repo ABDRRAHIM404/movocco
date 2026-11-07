@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   languageRow: {
     minHeight: 56,
     borderWidth: 1,
-    borderRadius: 12,
+    borderRadius: 16,
     paddingHorizontal: spacing.lg,
     justifyContent: 'center',
     gap: 2,
@@ -108,12 +108,12 @@ const styles = StyleSheet.create({
   soon: {},
   primary: {
     minHeight: 52,
-    borderRadius: 12,
+    borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: spacing.md,
   },
   primaryText: { fontWeight: '800' },
-  skip: { minHeight: 44, alignItems: 'center', justifyContent: 'center' },
+  skip: { minHeight: 48, alignItems: 'center', justifyContent: 'center' },
   skipText: { fontWeight: '700' },
 });
