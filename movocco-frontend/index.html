@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#081c38" />
+    <meta
+      name="description"
+      content="Movocco — discover transport routes and destinations across Morocco."
+    />
+    <link rel="icon" href="assets/app-icon.png" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Plan journeys | Movocco</title>
+  </head>
+  <body data-page="home">
+    <div id="site-header"></div>
+    <main>
+      <section class="hero">
+        <div class="hero-tint"></div>
+        <div class="container hero-inner">
+          <div class="hero-copy">
+            <span class="eyebrow light">Your Morocco, your journey</span>
+            <h1>Explore <em>Morocco</em><br />Your Way.</h1>
+            <p>
+              Find your way between places, discover how locals travel, and
+              explore more with confidence.
+            </p>
+            <div class="hero-tags">
+              <span>◈ All transport</span><span>⌖ Real boarding points</span
+              ><span>✦ Local travel tips</span>
+            </div>
+          </div>
+          <form id="home-search" class="search-panel" action="results.html">
+            <div class="search-tabs">
+              <button type="button" class="search-tab active" data-mode="route">
+                ↗ Plan a route</button
+              ><a href="destinations.html" class="search-tab"
+                >⌖ Explore places</a
+              ><a href="transport.html" class="search-tab">▣ Find transport</a>
+            </div>
+            <div class="search-controls">
+              <label class="field"
+                ><small>From</small
+                ><input
+                  name="from"
+                  list="places"
+                  value="Agadir"
+                  aria-label="Starting location"
+                  required /></label
+              ><button
+                class="swap-btn"
+                type="button"
+                aria-label="Swap locations"
+              >
+                ⇄</button
+              ><label class="field"
+                ><small>To</small
+                ><input
+                  name="to"
+                  list="places"
+                  placeholder="Where to?"
+                  aria-label="Destination"
+                  required /></label
+              ><label class="field date-field"
+                ><small>Travel date</small
+                ><input
+                  type="date"
+                  name="date"
+                  aria-label="Travel date" /></label
+              ><button class="primary-btn search-submit" type="submit">
+                ⌕ Search routes <span>→</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+      <section class="container below-hero">
+        <div class="transport-strip">
+          <a href="transport.html#city-bus"><span>🚌</span>City buses</a
+          ><a href="transport.html#grand-taxi"><span>🚕</span>Grand taxis</a
+          ><a href="transport.html#intercity"><span>🚍</span>Intercity buses</a
+          ><a href="transport.html#rail"><span>🚆</span>Trains</a
+          ><a href="transport.html#airport"><span>✈️</span>Airport</a
+          ><a href="transport.html"><span>＋</span>More</a>
+        </div>
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Places worth the journey</span>
+            <h2>Discover Morocco</h2>
+          </div>
+          <a class="text-link" href="destinations.html">All destinations →</a>
+        </div>
+        <div id="featured-destinations" class="destination-grid"></div>
+        <div class="promise-bar">
+          <div>
+            <span class="promise-icon">↗</span
+            ><strong>Clear route options</strong
+            ><small>Compare how to travel</small>
+          </div>
+          <div>
+            <span class="promise-icon">⌖</span><strong>Know where to go</strong
+            ><small>Find starting points</small>
+          </div>
+          <div>
+            <span class="promise-icon">✓</span
+            ><strong>Travel with context</strong
+            ><small>See source and data notes</small>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div id="site-footer"></div>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="app.js" defer></script>
+  </body>
+</html>

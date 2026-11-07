@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Movocco — explore Agadir and learn about local transport."
+    />
+    <link rel="icon" type="image/png" href="assets/app-icon.png" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Home | Movocco</title>
+  </head>
+  <body class="home">
+    <header class="header">
+      <div class="wrap topbar">
+        <a href="index.html" class="brand" aria-label="Movocco home"
+          ><img src="assets/logo-dark.png" alt="Movocco"
+        /></a>
+        <nav class="desktop-nav" aria-label="Main navigation">
+          <a href="index.html" aria-current="page">Home</a
+          ><a href="results.html">Plan a journey</a
+          ><a href="destinations.html">Places</a
+          ><a href="transport.html">Transport</a><a href="saved.html">Saved</a>
+        </nav>
+        <details class="mobile-menu">
+          <summary aria-label="Open menu">☰ Menu</summary>
+          <nav>
+            <a href="index.html" aria-current="page">Home</a
+            ><a href="results.html">Plan a journey</a
+            ><a href="destinations.html">Places</a
+            ><a href="transport.html">Transport</a
+            ><a href="saved.html">Saved</a>
+          </nav>
+        </details>
+      </div>
+    </header>
+    <main>
+      <section class="hero">
+        <div class="wrap hero-content">
+          <span class="kicker light">Explore Agadir, your way</span>
+          <h1>Discover <span>Agadir</span><br />without the guesswork.</h1>
+          <p>
+            Find city transport, familiar landmarks and practical information
+            for your next journey.
+          </p>
+          <div class="hero-labels">
+            <span>✦ Local places</span><span>↗ Clear directions</span
+            ><span>◉ Easy planning</span>
+          </div>
+        </div>
+        <div class="wrap planner-wrap">
+          <div class="planner">
+            <div class="planner-title">
+              <strong>Plan a journey</strong
+              ><span>Agadir city · Sample routes</span>
+            </div>
+            <form action="results.html" method="get" class="planner-row">
+              <label
+                ><span>From</span
+                ><select name="from" aria-label="Starting point">
+                  <option>Agadir city center</option>
+                  <option>Talborjt</option>
+                  <option>Founty</option>
+                  <option>Marina Agadir</option>
+                </select></label
+              ><label
+                ><span>To</span
+                ><select name="to" aria-label="Destination">
+                  <option>Marina Agadir</option>
+                  <option>Talborjt</option>
+                  <option>Souk El Had</option>
+                  <option>Founty</option>
+                  <option>Agadir Oufella</option>
+                  <option>Agadir Beach</option>
+                </select></label
+              ><button class="button primary" type="submit">
+                ⌕ Explore routes →
+              </button>
+            </form>
+            <p class="planner-note">
+              Demo: form fields are for practice; the next page shows a fixed
+              list of example routes.
+            </p>
+          </div>
+        </div>
+      </section>
+      <section class="wrap home-body">
+        <div class="section-head">
+          <div>
+            <span class="kicker">Your city guide</span>
+            <h2>Explore more of Agadir</h2>
+          </div>
+          <a class="text-action" href="destinations.html">See all places →</a>
+        </div>
+        <div class="place-grid">
+          <a class="place-card" href="destination.html#talborjt"
+            ><img
+              src="assets/agadir.jpg"
+              alt="Agadir city view"
+              loading="lazy"
+            /><span class="place-body"
+              ><small>City neighborhood</small><strong>Talborjt</strong
+              ><span>Restaurants, cafés and local streets.</span></span
+            ></a
+          ><a class="place-card" href="destination.html#founty"
+            ><img
+              src="assets/agadir.jpg"
+              alt="Agadir city view"
+              loading="lazy"
+            /><span class="place-body"
+              ><small>Coastal district</small><strong>Founty</strong
+              ><span>Beachfront hotels and relaxed walking routes.</span></span
+            ></a
+          ><a class="place-card" href="destination.html#marina"
+            ><img
+              src="assets/agadir.jpg"
+              alt="Agadir city view"
+              loading="lazy"
+            /><span class="place-body"
+              ><small>Waterfront</small><strong>Marina Agadir</strong
+              ><span>Boats, cafes and views over the bay.</span></span
+            ></a
+          >
+        </div>
+        <div class="feature-strip">
+          <div>
+            <span>⌖</span><strong>City-focused</strong
+            ><small>Keep your trips within Agadir</small>
+          </div>
+          <div>
+            <span>⇄</span><strong>Compare options</strong
+            ><small>Understand common modes</small>
+          </div>
+          <div>
+            <span>✓</span><strong>Clear explanations</strong
+            ><small>Read helpful travel tips</small>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">
+      <div class="wrap footer-layout">
+        <div>
+          <img class="footer-logo" src="assets/logo-dark.png" alt="Movocco" />
+          <p>Explore Agadir with clearer local travel information.</p>
+        </div>
+        <div>
+          <b>Explore</b><a href="destinations.html">Places in Agadir</a
+          ><a href="transport.html">Transport guide</a
+          ><a href="results.html">Example journeys</a>
+        </div>
+        <div>
+          <b>Prototype</b>
+          <p>
+            HTML + CSS only. All fares, travel times and routes shown are
+            illustrative, not verified.
+          </p>
+        </div>
+      </div>
+      <div class="wrap copyright">© 2026 Movocco · Learning project</div>
+    </footer>
+  </body>
+</html>
