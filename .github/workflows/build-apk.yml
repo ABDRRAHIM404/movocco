@@ -38,12 +38,19 @@ jobs:
           packages: platform-tools
 
       - name: Install Android SDK packages
-        # platforms;android-37 is not served by Google's stable SDK repository
-        # (build-tools 37.0.0 is, but the platform itself is not), so the app
-        # compiles against API 36 (targetSdk is already 36).
+        # platforms;android-37 is not listed in Google's stable SDK repository
+        # (sdkmanager cannot find it), but the platform archive is served
+        # directly at dl.google.com. Download it, unpack to
+        # platforms/android-37.0, and copy to platforms/android-37, which is
+        # where Gradle looks for compileSdk 37. Expo SDK 58 modules require
+        # compileSdk 37, so compiling against 36 is not an option.
         run: |
-          sdkmanager "platforms;android-36" "build-tools;36.0.0" "ndk;27.1.12297006" "cmake;3.22.1"
+          sdkmanager "build-tools;37.0.0" "ndk;27.1.12297006" "cmake;3.22.1"
           yes | sdkmanager --licenses
+          curl -sS -o /tmp/platform-37.0_r02.zip https://dl.google.com/android/repository/platform-37.0_r02.zip
+          unzip -q /tmp/platform-37.0_r02.zip -d "$ANDROID_HOME/platforms"
+          cp -r "$ANDROID_HOME/platforms/android-37.0" "$ANDROID_HOME/platforms/android-37"
+          ls "$ANDROID_HOME/platforms/android-37/android.jar"
 
       - name: Install dependencies
         working-directory: apps/android
