@@ -29,6 +29,13 @@ jobs:
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          # v3 defaults packages to "tools platform-tools", but Google removed
+          # the legacy "tools" package from the SDK repository (Sep 2026), so
+          # the bare call fails with "Failed to find package 'tools'".
+          # platform-tools is all this step needs; the next step installs the
+          # platform, build-tools, NDK and CMake.
+          packages: platform-tools
 
       - name: Install Android SDK packages
         run: |
