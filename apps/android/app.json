@@ -1,0 +1,35 @@
+{
+  "expo": {
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#0A1526",
+        "foregroundImage": "./assets/brand/icon.png"
+      },
+      "package": "ma.movocco.app",
+      "predictiveBackGestureEnabled": false
+    },
+    "experiments": {
+      "typedRoutes": true
+    },
+    "icon": "./assets/brand/icon.png",
+    "ios": {
+      "bundleIdentifier": "ma.movocco.app",
+      "supportsTablet": true
+    },
+    "name": "Movocco",
+    "orientation": "portrait",
+    "plugins": [
+      "expo-router",
+      "expo-localization",
+      "expo-location",
+      "expo-status-bar"
+    ],
+    "scheme": "movocco",
+    "slug": "movocco",
+    "userInterfaceStyle": "automatic",
+    "version": "1.0.0",
+    "web": {
+      "favicon": "./assets/brand/icon.png"
+    }
+  }
+}
