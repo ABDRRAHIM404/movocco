@@ -10,6 +10,8 @@ jobs:
   build-apk:
     name: Build release APK
     runs-on: ubuntu-latest
+    # A healthy first build takes ~30 min; fail loudly instead of hanging.
+    timeout-minutes: 45
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,6 +29,10 @@ jobs:
           distribution: temurin
           java-version: 17
 
+      - name: Setup Gradle
+        # Caches Gradle dependencies and build outputs between runs.
+        uses: gradle/actions/setup-gradle@v4
+
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
         with:
@@ -37,19 +43,40 @@ jobs:
           # platform, build-tools, NDK and CMake.
           packages: platform-tools
 
+      - name: Cache Android SDK packages
+        # The NDK alone is ~1 GB to download every run. Cache the installed
+        # packages; sdkmanager below is idempotent and repairs anything the
+        # cache misses. Keyed on this file so a package-list change busts it.
+        uses: actions/cache@v4
+        with:
+          path: |
+            /usr/local/lib/android/sdk/ndk
+            /usr/local/lib/android/sdk/build-tools
+            /usr/local/lib/android/sdk/cmake
+            /usr/local/lib/android/sdk/platforms
+            /usr/local/lib/android/sdk/licenses
+          key: android-sdk-v1-${{ hashFiles('.github/workflows/build-apk.yml') }}
+          restore-keys: |
+            android-sdk-v1-
+
       - name: Install Android SDK packages
         # platforms;android-37 is not listed in Google's stable SDK repository
         # (sdkmanager cannot find it), but the platform archive is served
-        # directly at dl.google.com. Download it, unpack to
+        # directly at dl.google.com. Download it only if the platform is not
+        # already installed (e.g. restored from cache), unpack to
         # platforms/android-37.0, and copy to platforms/android-37, which is
         # where Gradle looks for compileSdk 37. Expo SDK 58 modules require
         # compileSdk 37, so compiling against 36 is not an option.
+        # unzip -o: the runner image already ships an android-37.0 dir, and a
+        # bare unzip would stop to ask whether to overwrite it.
         run: |
           sdkmanager "build-tools;37.0.0" "ndk;27.1.12297006" "cmake;3.22.1"
           yes | sdkmanager --licenses
-          curl -sS -o /tmp/platform-37.0_r02.zip https://dl.google.com/android/repository/platform-37.0_r02.zip
-          unzip -o -q /tmp/platform-37.0_r02.zip -d "$ANDROID_HOME/platforms"
-          cp -r "$ANDROID_HOME/platforms/android-37.0" "$ANDROID_HOME/platforms/android-37"
+          if [ ! -f "$ANDROID_HOME/platforms/android-37/android.jar" ]; then
+            curl -sS -o /tmp/platform-37.0_r02.zip https://dl.google.com/android/repository/platform-37.0_r02.zip
+            unzip -o -q /tmp/platform-37.0_r02.zip -d "$ANDROID_HOME/platforms"
+            cp -r "$ANDROID_HOME/platforms/android-37.0" "$ANDROID_HOME/platforms/android-37"
+          fi
           ls "$ANDROID_HOME/platforms/android-37/android.jar"
 
       - name: Install dependencies
