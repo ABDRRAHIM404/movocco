@@ -19,4 +19,4 @@ Updated: 2026-11-06.
 - Dependencies: authenticated GitHub access, local validation, inspection of remote main.
 - Acceptance: remote main matches the local tree; previous-project files absent from the current branch; existing history preserved; clean working tree.
 - Checks: JavaScript syntax, local HTML asset links, credential-pattern scan and file-size checks passed. No build tooling exists for these static prototypes.
-- Status: publication in progress; no website deployment requested.
+- Status: current Movocco files pushed to ABDRRAHIM404/movocco main; previous-project files removed from its current tree, with history preserved. No website deployment performed.
