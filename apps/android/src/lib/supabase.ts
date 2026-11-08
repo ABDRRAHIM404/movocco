@@ -7,9 +7,12 @@
  * - Only the public anon key may ever be used in the app; all privileged
  *   access must be enforced server-side by Row Level Security.
  *
- * STATUS: no Supabase project exists yet. With the env vars unset this
- * module exports `supabase === null` and `status === 'not-configured'`, and
- * the app runs on the clearly labelled DEMO dataset only.
+ * STATUS: the movocco Supabase project exists (Paris) and the database
+ * schema is applied. With the env vars unset this module exports
+ * `supabase === null` and `status === 'not-configured'`, and the app runs
+ * on the clearly labelled DEMO dataset only. The vars reach the build as
+ * GitHub Actions repo secrets (EXPO_PUBLIC_SUPABASE_URL,
+ * EXPO_PUBLIC_SUPABASE_ANON_KEY).
  */
 import 'react-native-url-polyfill/auto';
 import AsyncStorage from '@react-native-async-storage/async-storage';

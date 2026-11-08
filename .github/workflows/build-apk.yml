@@ -12,6 +12,12 @@ jobs:
     runs-on: ubuntu-latest
     # A healthy first build takes ~30 min; fail loudly instead of hanging.
     timeout-minutes: 45
+    env:
+      # Supabase connection for the app (the anon key is public by design;
+      # RLS on the database enforces access). Stored as repo Actions
+      # secrets, never committed to the repo.
+      EXPO_PUBLIC_SUPABASE_URL: ${{ secrets.EXPO_PUBLIC_SUPABASE_URL }}
+      EXPO_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.EXPO_PUBLIC_SUPABASE_ANON_KEY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -86,6 +92,15 @@ jobs:
       - name: Restore brand assets
         working-directory: apps/android
         run: node scripts/restore-brand-assets.js
+
+      - name: Check Supabase config
+        # Fail loudly if the secrets are missing instead of silently
+        # shipping a DEMO-only build. Values are never printed.
+        run: |
+          if [ -z "$EXPO_PUBLIC_SUPABASE_URL" ] || [ -z "$EXPO_PUBLIC_SUPABASE_ANON_KEY" ]; then
+            echo "Supabase env vars missing — set the EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_ANON_KEY repo secrets"
+            exit 1
+          fi
 
       - name: Prebuild Android
         working-directory: apps/android
